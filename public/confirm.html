@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận Thanh toán</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Xác nhận Thanh toán</h2>
+        <div class="info-box">
+            <p><strong>Tên khách hàng:</strong> <span id="customer-name"></span></p>
+            <p><strong>Số điện thoại:</strong> <span id="customer-phone"></span></p>
+            <p><strong>Địa chỉ:</strong> <span id="customer-address"></span></p>
+            <p><strong>Số giờ thuê:</strong> <span id="hours"></span></p>
+            <p><strong>Tổng tiền:</strong> <span id="total-amount"></span> VNĐ</p>
+        </div>
+
+        <!-- Form để gửi yêu cầu tạo liên kết thanh toán -->
+        <form id="payment-form" action="/confirm-payment" method="POST">
+            <input type="hidden" name="orderCode" id="order-code">
+            <input type="hidden" name="amount" id="amount">
+            <input type="hidden" name="description" id="description">
+            <input type="hidden" name="customerName" id="hidden-customer-name">
+            <input type="hidden" name="customerPhone" id="hidden-customer-phone">
+            <input type="hidden" name="customerAddress" id="hidden-customer-address">
+            <button type="submit" class="btn">Xác nhận và Thanh toán</button>
+        </form>
+    </div>
+
+    <script>
+        // Lấy thông tin từ URL (Query Params)
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('customer-name').innerText = params.get('customerName');
+        document.getElementById('customer-phone').innerText = params.get('customerPhone');
+        document.getElementById('customer-address').innerText = params.get('customerAddress');
+        document.getElementById('hours').innerText = params.get('hours');
+        document.getElementById('total-amount').innerText = params.get('totalAmount');
+
+        // Điền thông tin vào form ẩn
+        document.getElementById('order-code').value = params.get('orderCode');
+        document.getElementById('amount').value = params.get('totalAmount');
+        document.getElementById('description').value = `Đặt chỗ ${params.get('hours')} giờ với bảo mẫu`;
+        document.getElementById('hidden-customer-name').value = params.get('customerName');
+        document.getElementById('hidden-customer-phone').value = params.get('customerPhone');
+        document.getElementById('hidden-customer-address').value = params.get('customerAddress');
+    </script>
+</body>
+</html>
